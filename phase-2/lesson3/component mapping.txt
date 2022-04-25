@@ -1,0 +1,79 @@
+package com.ecommerce;
+
+import java.math.BigDecimal;
+import java.util.Collection;
+import java.util.Date;
+import java.util.List;
+import java.util.Set;
+import java.util.Map;
+
+
+public class EProduct {
+        private long ID;
+        private String name;
+        private BigDecimal price;
+        private Date dateAdded;
+        private ProductParts parts;
+        
+        public EProduct() {
+                
+        }
+        
+        public long getID() {return this.ID; }
+        public String getName() { return this.name;}
+        public BigDecimal getPrice() { return this.price;}
+        public Date getDateAdded() { return this.dateAdded;}
+        public ProductParts getParts() { return this.parts;}
+        
+        public void setID(long id) { this.ID = id;}
+        public void setName(String name) { this.name = name;}
+        public void setPrice(BigDecimal price) { this.price = price;}
+        public void setDateAdded(Date date) { this.dateAdded = date;}
+        public void setParts(ProductParts parts) { this.parts = parts;}
+}
+
+package com.ecommerce;
+
+public class ProductParts {
+
+        private String hdd;
+        private String cpu;
+        private String ram;
+        
+        public String getHdd() { return this.hdd;}
+        public String getCpu() { return this.cpu;}
+        public String getRam() { return this.ram;}
+        
+        public void setHdd(String value) { this.hdd= value;}
+        public void setCpu(String value) { this.cpu= value;}
+        public void setRam(String value) { this.ram= value;}
+        
+}
+package com.ecommerce;
+
+import org.hibernate.SessionFactory;
+import org.hibernate.boot.Metadata;
+import org.hibernate.boot.MetadataSources;
+import org.hibernate.boot.registry.StandardServiceRegistry;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+
+public class HibernateUtil {
+
+        private static final SessionFactory sessionFactory;
+
+        static {
+                try {
+                        StandardServiceRegistry standardRegistry = new StandardServiceRegistryBuilder()
+                                        .configure("hibernate.cfg.xml").build();
+                        Metadata metaData = new MetadataSources(standardRegistry).getMetadataBuilder().build();
+                        sessionFactory = metaData.getSessionFactoryBuilder().build();
+                } catch (Throwable th) {
+                        throw new ExceptionInInitializerError(th);
+                }
+        }
+
+        public static SessionFactory getSessionFactory() {
+                return sessionFactory;
+        }
+}
+
